@@ -40,7 +40,11 @@ export class LoginComponent implements OnInit {
       this.authService.login(loginData).subscribe({
         next: () => {
           this.toast.success('Iniciastes sesión Correctamente')
-          this.router.navigate(['/profile'])
+          if (this.authService.userToken?.rol === 'usuario') {
+            this.router.navigate(['/list'])
+          } else {
+            this.router.navigate(['/profile'])
+          }
         },
         error: () => {
           this.toast.error('Credenciales inválidas, intente nuevamente.')

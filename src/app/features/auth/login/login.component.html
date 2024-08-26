@@ -55,6 +55,7 @@
             pButton
             type="submit"
             label="Iniciar Sesión"
+            [disabled]="form.invalid"
             (click)="login()"
           ></button>
         </div>
