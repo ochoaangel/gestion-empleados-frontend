@@ -9,6 +9,7 @@ import { EmployeeListComponent } from './features/employee-list/employee-list.co
 import { ReactiveFormsModule } from '@angular/forms'
 import { AuthService } from './services/auth.service'
 import { PrimeNgModule } from './primeng/primeng.module'
+import { EmployeeProfileService } from './services/employee-profile.service'
 
 @NgModule({
   declarations: [
@@ -23,7 +24,7 @@ import { PrimeNgModule } from './primeng/primeng.module'
     ReactiveFormsModule,
     PrimeNgModule,
   ],
-  providers: [AuthService],
+  providers: [AuthService, EmployeeProfileService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,1 +1,147 @@
-<p>employee-profile works!</p>
+<div class="profile-container">
+  <p-card header="Perfil de Empleado" class="profile-card">
+    <form [formGroup]="form" (ngSubmit)="saveProfile()">
+      <div class="p-fluid">
+        <div class="p-field">
+          <label for="email">Email</label>
+          <input
+            id="email"
+            pInputText
+            formControlName="email"
+            type="email"
+            required
+          />
+          <div *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
+            <small *ngIf="form.get('email')?.errors?.['required']"
+              >Email es requerido.</small
+            >
+            <small *ngIf="form.get('email')?.errors?.['email']"
+              >Email no es válido.</small
+            >
+          </div>
+        </div>
+
+        <div class="p-field">
+          <label for="nombre">Nombre</label>
+          <input
+            id="nombre"
+            pInputText
+            formControlName="nombre"
+            type="text"
+            required
+          />
+          <div
+            *ngIf="form.get('nombre')?.invalid && form.get('nombre')?.touched"
+          >
+            <small *ngIf="form.get('nombre')?.errors?.['required']"
+              >Nombre es requerido.</small
+            >
+          </div>
+        </div>
+
+        <div class="p-field">
+          <label for="apellido">Apellido</label>
+          <input
+            id="apellido"
+            pInputText
+            formControlName="apellido"
+            type="text"
+            required
+          />
+          <div
+            *ngIf="
+              form.get('apellido')?.invalid && form.get('apellido')?.touched
+            "
+          >
+            <small *ngIf="form.get('apellido')?.errors?.['required']"
+              >Apellido es requerido.</small
+            >
+          </div>
+        </div>
+
+        <div class="p-field">
+          <label for="fechaNacimiento">Fecha de Nacimiento</label>
+          <p-calendar
+            id="fechaNacimiento"
+            formControlName="fechaNacimiento"
+            dateFormat="dd/mm/yy"
+          ></p-calendar>
+          <div
+            *ngIf="
+              form.get('fechaNacimiento')?.invalid &&
+              form.get('fechaNacimiento')?.touched
+            "
+          >
+            <small *ngIf="form.get('fechaNacimiento')?.errors?.['required']"
+              >Fecha de nacimiento es requerida.</small
+            >
+          </div>
+        </div>
+
+        <div class="p-field">
+          <label for="puestoTrabajo">Puesto de Trabajo</label>
+          <p-dropdown
+            formControlName="puestoTrabajo"
+            [options]="puestosTrabajo"
+            optionLabel="label"
+            placeholder="Seleccione.."
+          />
+          <div
+            *ngIf="
+              form.get('puestoTrabajo')?.invalid &&
+              form.get('puestoTrabajo')?.touched
+            "
+          >
+            <small *ngIf="form.get('puestoTrabajo')?.errors?.['required']"
+              >Puesto de trabajo es requerido.</small
+            >
+          </div>
+        </div>
+
+        <div class="p-field">
+          <label for="tipoContrato">Tipo de Contrato</label>
+          <p-dropdown
+            formControlName="tipoContrato"
+            [options]="tiposContrato"
+            optionLabel="label"
+            placeholder="Seleccione.."
+          />
+          <div
+            *ngIf="
+              form.get('tipoContrato')?.invalid &&
+              form.get('tipoContrato')?.touched
+            "
+          >
+            <small *ngIf="form.get('tipoContrato')?.errors?.['required']"
+              >Tipo de contrato es requerido.</small
+            >
+          </div>
+        </div>
+
+        <div class="p-field">
+          <label for="fechaInicio">Fecha de Inicio</label>
+          <p-calendar formControlName="fechaInicio" />
+          <div
+            *ngIf="
+              form.get('fechaInicio')?.invalid &&
+              form.get('fechaInicio')?.touched
+            "
+          >
+            <small *ngIf="form.get('fechaInicio')?.errors?.['required']"
+              >Fecha de inicio es requerida.</small
+            >
+          </div>
+        </div>
+
+        <div class="form-buttons">
+          <button
+            pButton
+            type="submit"
+            label="Guardar"
+            [disabled]="form.invalid"
+          ></button>
+        </div>
+      </div>
+    </form>
+  </p-card>
+</div>

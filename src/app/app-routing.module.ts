@@ -8,25 +8,25 @@ import { EmployeeProfileComponent } from './features/employee-profile/employee-p
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'login', component: LoginComponent },
-  {
-    path: '',
-    //   canActivate: [AuthGuard],
-    children: [
-      //     {
-      //       path: 'dashboard',
-      //       component: DashboardComponent,
-      //       canActivate: [RoleGuard],
-      //       children: [
-      //         { path: 'employees', component: EmployeeListComponent },
-      //         { path: 'hiring', component: HiringComponent },
-      //         { path: '', redirectTo: 'employees', pathMatch: 'full' }
-      //       ]
-      //     },
-      { path: 'profile', component: EmployeeProfileComponent },
-      //     { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
-    ],
-  },
-  { path: '**', redirectTo: 'login' },
+  { path: 'profile', component: EmployeeProfileComponent },
+  // {
+  // path: '',
+  //   canActivate: [AuthGuard],
+  // children: [
+  //     {
+  //       path: 'dashboard',
+  //       component: DashboardComponent,
+  //       canActivate: [RoleGuard],
+  //       children: [
+  //         { path: 'employees', component: EmployeeListComponent },
+  //         { path: 'hiring', component: HiringComponent },
+  //         { path: '', redirectTo: 'employees', pathMatch: 'full' }
+  //       ]
+  //     },
+  //     { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
+  //   ],
+  // },
+  { path: '**', redirectTo: 'profile' },
 ]
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

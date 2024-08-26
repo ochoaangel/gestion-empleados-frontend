@@ -1,0 +1,24 @@
+.profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  .profile-card {
+    width: 400px;
+  }
+
+  .form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+
+    button {
+      width: 100%;
+    }
+  }
+}
+
+.p-field {
+  margin-bottom: 1.5rem;
+}

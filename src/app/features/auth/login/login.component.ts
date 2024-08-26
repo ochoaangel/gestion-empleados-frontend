@@ -39,6 +39,6 @@ export class LoginComponent implements OnInit {
 
   iniciarSesion() {
     console.log('Inicio De sesión')
-    this.router.navigate(['profile'])
+    this.router.navigate(['/profile'])
   }
 }
