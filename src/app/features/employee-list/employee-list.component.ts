@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
-import { LazyLoadEvent } from 'primeng/api'
 import { Table } from 'primeng/table'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { EmployeeProfileService } from '../../services/employee-profile.service'
@@ -8,6 +7,7 @@ import {
   EmployeeDetailModel,
 } from '../../models/employee-profile.model'
 import { AuthService } from '../../services/auth.service'
+import { TableLazyLoadEvent } from 'primeng/table'
 
 @Component({
   selector: 'app-employee-list',
@@ -26,7 +26,6 @@ export class EmployeeListComponent implements OnInit {
   nombreEmpleado: string = 'Juan Pérez'
   titulo: string = 'Gerente de Ventas'
 
-  // Agregamos estas propiedades
   statuses: DropDownInterface[] = [
     { label: 'Activo', value: 'activo' },
     { label: 'Baja', value: 'baja' },
@@ -53,55 +52,37 @@ export class EmployeeListComponent implements OnInit {
     this.loadEmployees({ first: 0, rows: 10 })
   }
 
-  loadEmployees(event: LazyLoadEvent) {
+  loadEmployees(event: TableLazyLoadEvent) {
     this.loading = true
-    console.log(event)
-    // const params = {
-    //   first: event.first?.toString() || '0',
-    //   rows: event.rows?.toString() || '10',
-    //   sortField: event.sortField || '',
-    //   sortOrder: event.sortOrder === 1 ? 'asc' : 'desc',
-    //   filters: JSON.stringify(event.filters || {}),
-    // }
+    const params = {
+      pagina: (event.first ?? 0) / (event.rows ?? 10) + 1,
+      limite: event.rows ?? 10,
+      busqueda: event.globalFilter as string | undefined,
+      sortField:
+        event.sortField && typeof event.sortField === 'string'
+          ? event.sortField
+          : undefined,
+      sortOrder: event.sortOrder === 1 ? 'asc' : 'desc',
+    }
 
-    // this.employeeService.getEmployees(params).subscribe(
-    //   () => {
-    // console.log(response)
-    // this.employees = response.data
-    // this.totalRecords = response.total
-    //   this.loading = false
-    // },
-    // () => {
-    // console.error('Error fetching employees', error)
-    //     this.loading = false
-    //   },
-    // )
+    this.employeeService.getEmployees(params).subscribe(
+      (response) => {
+        this.employees = response.docs
+        this.totalRecords = response.totalDocs
+        this.loading = false
+      },
+      (error) => {
+        console.error('Error fetching employees', error)
+        this.loading = false
+      },
+    )
   }
 
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains')
   }
 
-  showAddModal() {
-    this.employeeForm.reset()
-    this.displayModal = true
-  }
-
-  onSubmit() {
-    // if (this.employeeForm.valid) {
-    //   const employee: EmployeeDetailModel = this.employeeForm.value
-    //   this.employeeService.addEmployee(employee).subscribe(
-    //     () => {
-    //       this.displayModal = false
-    //       this.loadEmployees({ first: 0, rows: 10 })
-    //     },
-    //     (error) => console.error('Error adding employee', error),
-    //   )
-    // }
-  }
-
-  // Agregamos este método
-  getSeverity(status: string): string {
+  getSeverity(status: string): 'success' | 'danger' | 'info' {
     switch (status) {
       case 'activo':
         return 'success'
@@ -112,14 +93,35 @@ export class EmployeeListComponent implements OnInit {
     }
   }
 
-  // // Métodos adicionales para editar y eliminar empleados (implementar según sea necesario)
   editEmployee(employee: EmployeeDetailModel) {
-    //   // Implementar lógica de edición
-    console.log('employee', employee)
+    this.employeeForm.patchValue(employee)
+    this.displayModal = true
   }
 
   deleteEmployee(employee: EmployeeDetailModel) {
-    // Implementar lógica de eliminación
-    console.log('employee', employee)
+    if (confirm('¿Está seguro de que desea eliminar este empleado?')) {
+      this.employeeService.deleteEmployee(employee.id).subscribe(
+        () => {
+          this.loadEmployees({ first: 0, rows: 10 })
+        },
+        (error) => console.error('Error deleting employee', error),
+      )
+    }
+  }
+
+  onSubmit() {
+    if (this.employeeForm.valid) {
+      const employee: Partial<EmployeeDetailModel> = this.employeeForm.value
+      const id = employee.id
+      if (id) {
+        this.employeeService.updateProfile(id, employee).subscribe(
+          () => {
+            this.displayModal = false
+            this.loadEmployees({ first: 0, rows: 10 })
+          },
+          () => console.error('Error updating employee'),
+        )
+      }
+    }
   }
 }

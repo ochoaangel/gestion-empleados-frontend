@@ -1,10 +1,10 @@
 <app-toolbar [nombreEmpleado]="nombreEmpleado" [titulo]="titulo"></app-toolbar>
 
-<!-- (onLazyLoad)="loadEmployees($event)" -->
 <p-table
   #dt
   [value]="employees"
   [lazy]="true"
+  (onLazyLoad)="loadEmployees($event)"
   [paginator]="true"
   [rows]="10"
   [totalRecords]="totalRecords"
@@ -32,13 +32,6 @@
           placeholder="Buscar..."
         />
       </span>
-      <!-- <button
-        pButton
-        label="Agregar Empleado"
-        icon="pi pi-plus"
-        class="p-button-success ml-2"
-        (click)="showAddModal()"
-      ></button> -->
     </div>
   </ng-template>
   <ng-template pTemplate="header">
@@ -61,46 +54,13 @@
       <th pSortableColumn="tipoContrato">
         Tipo de Contrato <p-sortIcon field="tipoContrato"></p-sortIcon>
       </th>
-      <th pSortableColumn="fechaInicio">
-        Fecha de Inicio <p-sortIcon field="fechaInicio"></p-sortIcon>
+      <th pSortableColumn="fechaInicioContrato">
+        Fecha de Inicio <p-sortIcon field="fechaInicioContrato"></p-sortIcon>
       </th>
       <th pSortableColumn="status">
         Estado <p-sortIcon field="status"></p-sortIcon>
       </th>
       <th>Acciones</th>
-    </tr>
-    <tr>
-      <th><p-columnFilter type="text" field="email"></p-columnFilter></th>
-      <th><p-columnFilter type="text" field="nombre"></p-columnFilter></th>
-      <th><p-columnFilter type="text" field="apellido"></p-columnFilter></th>
-      <th>
-        <p-columnFilter type="date" field="fechaNacimiento"></p-columnFilter>
-      </th>
-      <th>
-        <p-columnFilter type="text" field="puestoTrabajo"></p-columnFilter>
-      </th>
-      <th>
-        <p-columnFilter type="text" field="tipoContrato"></p-columnFilter>
-      </th>
-      <th><p-columnFilter type="date" field="fechaInicio"></p-columnFilter></th>
-      <th>
-        <p-columnFilter field="status" matchMode="equals" [showMenu]="false">
-          <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-            <p-dropdown
-              [ngModel]="value"
-              [options]="statuses"
-              (onChange)="filter($event.value)"
-              placeholder="Seleccione"
-              [showClear]="true"
-            >
-              <!-- <ng-template let-option pTemplate="item">
-                  <p-tag [value]="option.value" [severity]="getSeverity(option.value)"></p-tag>
-                </ng-template> -->
-            </p-dropdown>
-          </ng-template>
-        </p-columnFilter>
-      </th>
-      <th></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-employee>
@@ -111,10 +71,13 @@
       <td>{{ employee.fechaNacimiento | date: 'dd/MM/yyyy' }}</td>
       <td>{{ employee.puestoTrabajo }}</td>
       <td>{{ employee.tipoContrato }}</td>
-      <td>{{ employee.fechaInicio | date: 'dd/MM/yyyy' }}</td>
-      <!-- <td>
-        <p-tag [value]="employee.status" [severity]="getSeverity(employee.status)"></p-tag>
-      </td> -->
+      <td>{{ employee.fechaInicioContrato | date: 'dd/MM/yyyy' }}</td>
+      <td>
+        <p-tag
+          [value]="employee.status"
+          [severity]="getSeverity(employee.status)"
+        ></p-tag>
+      </td>
       <td>
         <button
           pButton
@@ -133,35 +96,92 @@
   </ng-template>
 </p-table>
 
-<!-- <p-dialog [(visible)]="displayModal" [style]="{width: '450px'}" header="Empleado" [modal]="true" styleClass="p-fluid">
+<p-dialog
+  [(visible)]="displayModal"
+  [style]="{ width: '450px' }"
+  header="Empleado"
+  [modal]="true"
+  styleClass="p-fluid"
+>
   <ng-template pTemplate="content">
     <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
       <div class="field">
         <label for="email">Email</label>
-        <input type="text" pInputText id="email" formControlName="email" required />
-        <small class="p-error" *ngIf="employeeForm.get('email')?.invalid && employeeForm.get('email')?.touched">
+        <input
+          type="text"
+          pInputText
+          id="email"
+          formControlName="email"
+          required
+        />
+        <small
+          class="p-error"
+          *ngIf="
+            employeeForm.get('email')?.invalid &&
+            employeeForm.get('email')?.touched
+          "
+        >
           Email es requerido y debe ser válido.
         </small>
       </div>
       <div class="field">
         <label for="nombre">Nombre</label>
-        <input type="text" pInputText id="nombre" formControlName="nombre" required />
-        <small class="p-error" *ngIf="employeeForm.get('nombre')?.invalid && employeeForm.get('nombre')?.touched">
+        <input
+          type="text"
+          pInputText
+          id="nombre"
+          formControlName="nombre"
+          required
+        />
+        <small
+          class="p-error"
+          *ngIf="
+            employeeForm.get('nombre')?.invalid &&
+            employeeForm.get('nombre')?.touched
+          "
+        >
           Nombre es requerido.
         </small>
       </div>
-      Agregar campos similares para los demás atributos
+
       <div class="field">
         <label for="status">Estado</label>
-        <p-dropdown id="status" [options]="statuses" formControlName="status" optionLabel="label" optionValue="value" placeholder="Seleccione un estado"></p-dropdown>
-        <small class="p-error" *ngIf="employeeForm.get('status')?.invalid && employeeForm.get('status')?.touched">
+        <p-dropdown
+          id="status"
+          [options]="statuses"
+          formControlName="status"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Seleccione un estado"
+        ></p-dropdown>
+        <small
+          class="p-error"
+          *ngIf="
+            employeeForm.get('status')?.invalid &&
+            employeeForm.get('status')?.touched
+          "
+        >
           Estado es requerido.
         </small>
       </div>
     </form>
   </ng-template>
   <ng-template pTemplate="footer">
-    <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="displayModal=false"></button>
-    <button pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-text" (click)="onSubmit()"></button>
+    <button
+      pButton
+      pRipple
+      label="Cancelar"
+      icon="pi pi-times"
+      class="p-button-text"
+      (click)="displayModal = false"
+    ></button>
+    <button
+      pButton
+      pRipple
+      label="Guardar"
+      icon="pi pi-check"
+      class="p-button-text"
+      (click)="onSubmit()"
+    ></button>
   </ng-template>
-</p-dialog> -->
+</p-dialog>
