@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'profile', component: EmployeeProfileComponent },
   { path: 'list', component: EmployeeListComponent },
-  { path: '**', redirectTo: 'profile' },
+  { path: '**', redirectTo: 'login' },
 ]
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

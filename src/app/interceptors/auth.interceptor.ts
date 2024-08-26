@@ -1,15 +1,18 @@
-import { HttpInterceptorFn } from '@angular/common/http'
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http'
-import { catchError, switchMap, tap } from 'rxjs/operators'
-import { throwError } from 'rxjs'
+import {
+  HttpInterceptorFn,
+  HttpResponse,
+  HttpErrorResponse,
+} from '@angular/common/http'
 import { inject } from '@angular/core'
+import { tap, catchError, switchMap, throwError } from 'rxjs'
 import { AuthService } from '../services/auth.service'
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService)
   const token = localStorage.getItem('token')
 
-  // Clona la solicitud y agregar el token si existe
+  console.log('Interceptor ejecutado', req)
+
   const authReq = token
     ? req.clone({
         setHeaders: {
@@ -18,21 +21,28 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
       })
     : req
 
+  if (token) {
+    authService.decodeAndStoreToken(token)
+  }
+
   return next(authReq).pipe(
     tap((event) => {
       if (event instanceof HttpResponse) {
+        console.log('Respuesta recibida', event)
         const newToken = event.headers.get('Authorization')
         if (newToken) {
           localStorage.setItem('token', newToken)
+          authService.decodeAndStoreToken(newToken)
         }
       }
     }),
     catchError((error: HttpErrorResponse) => {
+      console.log('Error en la petición', error)
       if (error.status === 401) {
-        // Maneja la renovación del token aquí
         return authService.refreshToken().pipe(
           switchMap((newToken: string) => {
             localStorage.setItem('token', newToken)
+            authService.decodeAndStoreToken(newToken)
             const newAuthReq = req.clone({
               setHeaders: {
                 Authorization: `Bearer ${newToken}`,

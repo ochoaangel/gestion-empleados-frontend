@@ -18,6 +18,8 @@ import { MultiSelectModule } from 'primeng/multiselect'
 import { TableModule } from 'primeng/table'
 import { TagModule } from 'primeng/tag'
 import { ToolbarModule } from 'primeng/toolbar'
+import { ToastModule } from 'primeng/toast'
+
 @NgModule({
   exports: [
     BrowserAnimationsModule,
@@ -39,6 +41,7 @@ import { ToolbarModule } from 'primeng/toolbar'
     TableModule,
     TagModule,
     ToolbarModule,
+    ToastModule,
   ],
 })
 export class PrimeNgModule {}

@@ -11,8 +11,9 @@ import { AuthService } from './services/auth.service'
 import { PrimeNgModule } from './primeng/primeng.module'
 import { EmployeeProfileService } from './services/employee-profile.service'
 import { ToolbarComponent } from './shared/toolbar/toolbar.component'
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'
+import { MessageService } from 'primeng/api'
 import { authInterceptor } from './interceptors/auth.interceptor'
+import { provideHttpClient, withInterceptors } from '@angular/common/http'
 
 @NgModule({
   declarations: [
@@ -27,13 +28,13 @@ import { authInterceptor } from './interceptors/auth.interceptor'
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule,
     PrimeNgModule,
   ],
   providers: [
     AuthService,
     EmployeeProfileService,
-    { provide: HTTP_INTERCEPTORS, useValue: authInterceptor, multi: true },
+    MessageService,
+    provideHttpClient(withInterceptors([authInterceptor])),
   ],
   bootstrap: [AppComponent],
 })
