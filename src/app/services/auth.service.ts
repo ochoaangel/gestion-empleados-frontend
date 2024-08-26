@@ -6,6 +6,8 @@ import { LoginModel, LoginResponse } from '../models/login.model'
 import { jwtDecode } from 'jwt-decode'
 import { TokenPayload } from '../../../token-payload.model'
 import { environment } from '../../../environments.prod'
+import { Router } from '@angular/router'
+import { ToastService } from './toast.service'
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +15,11 @@ import { environment } from '../../../environments.prod'
 export class AuthService {
   public userToken: TokenPayload | null = null
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private toast: ToastService,
+  ) {}
 
   login(credentials: LoginModel): Observable<LoginResponse> {
     return this.http
@@ -50,5 +56,12 @@ export class AuthService {
       }
     }
     return throwError(errorMessage)
+  }
+
+  public logout(): void {
+    localStorage.removeItem('token')
+    this.userToken = null
+    this.router.navigate([''])
+    this.toast.success('Has Cerrado sesión satisfactoriamente !!')
   }
 }

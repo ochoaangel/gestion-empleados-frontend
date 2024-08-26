@@ -7,6 +7,7 @@ import {
   DropDownInterface,
   EmployeedDetailModel,
 } from '../../models/employee-profile.model'
+import { AuthService } from '../../services/auth.service'
 
 @Component({
   selector: 'app-employee-list',
@@ -34,6 +35,7 @@ export class EmployeeListComponent implements OnInit {
   constructor(
     private employeeService: EmployeeProfileService,
     private fb: FormBuilder,
+    private authService: AuthService,
   ) {
     this.employeeForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
