@@ -11,7 +11,7 @@ import { AuthService } from './services/auth.service'
 import { PrimeNgModule } from './primeng/primeng.module'
 import { EmployeeProfileService } from './services/employee-profile.service'
 import { ToolbarComponent } from './shared/toolbar/toolbar.component'
-import { MessageService } from 'primeng/api'
+import { ConfirmationService, MessageService } from 'primeng/api'
 import { authInterceptor } from './interceptors/auth.interceptor'
 import { provideHttpClient, withInterceptors } from '@angular/common/http'
 
@@ -34,6 +34,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http'
     AuthService,
     EmployeeProfileService,
     MessageService,
+    ConfirmationService,
     provideHttpClient(withInterceptors([authInterceptor])),
   ],
   bootstrap: [AppComponent],

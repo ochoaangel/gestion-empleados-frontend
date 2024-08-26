@@ -6,8 +6,10 @@ import {
   DropDownInterface,
   EmployeeDetailModel,
 } from '../../models/employee-profile.model'
-import { AuthService } from '../../services/auth.service'
 import { TableLazyLoadEvent } from 'primeng/table'
+import { ToastService } from '../../services/toast.service'
+import { ConfirmationService } from 'primeng/api'
+import { AuthService } from '../../services/auth.service'
 
 @Component({
   selector: 'app-employee-list',
@@ -32,9 +34,11 @@ export class EmployeeListComponent implements OnInit {
   ]
 
   constructor(
+    private confirmationService: ConfirmationService,
     private employeeService: EmployeeProfileService,
-    private fb: FormBuilder,
     private authService: AuthService,
+    private toast: ToastService,
+    private fb: FormBuilder,
   ) {
     this.employeeForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -98,21 +102,37 @@ export class EmployeeListComponent implements OnInit {
     this.displayModal = true
   }
 
-  deleteEmployee(employee: EmployeeDetailModel) {
-    if (confirm('¿Está seguro de que desea eliminar este empleado?')) {
-      this.employeeService.deleteEmployee(employee.id).subscribe(
-        () => {
-          this.loadEmployees({ first: 0, rows: 10 })
-        },
-        (error) => console.error('Error deleting employee', error),
-      )
-    }
+  deleteEmployee(employee: EmployeeDetailModel, event: Event) {
+    console.log(employee, event)
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: `¿Está seguro de que desea dar de baja a ${employee.nombre} ${employee.apellido} de email ${employee.email}?`,
+      header: 'Confirmación',
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: 'none',
+      acceptLabel: 'Si',
+      rejectIcon: 'none',
+      rejectButtonStyleClass: 'p-button-text',
+      accept: () => {
+        this.employeeService.deleteEmployee(employee._id).subscribe(
+          () => {
+            this.toast.success('Empleado dado de baja satisfactoriamente')
+            this.loadEmployees({ first: 0, rows: 10 })
+          },
+          (error) => {
+            this.toast.warn('Error al dar de baja al empleado')
+            console.error('Error deleting employee', error)
+          },
+        )
+      },
+      reject: () => {},
+    })
   }
 
   onSubmit() {
     if (this.employeeForm.valid) {
       const employee: Partial<EmployeeDetailModel> = this.employeeForm.value
-      const id = employee.id
+      const id = employee._id
       if (id) {
         this.employeeService.updateProfile(id, employee).subscribe(
           () => {

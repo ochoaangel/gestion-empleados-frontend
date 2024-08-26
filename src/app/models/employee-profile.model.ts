@@ -10,7 +10,7 @@ export interface EmployeeProfileModel {
 }
 
 export interface EmployeeDetailModel {
-  id: string
+  _id: string
   email: string
   nombre: string
   apellido: string
