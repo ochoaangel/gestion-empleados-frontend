@@ -22,6 +22,9 @@ export class EmployeeListComponent implements OnInit {
   employeeForm: FormGroup
   displayModal: boolean = false
 
+  nombreEmpleado: string = 'Juan Pérez'
+  titulo: string = 'Gerente de Ventas'
+
   // Agregamos estas propiedades
   statuses: DropDownInterface[] = [
     { label: 'Activo', value: 'activo' },

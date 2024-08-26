@@ -12,6 +12,9 @@ import { EmployeeProfileService } from '../../services/employee-profile.service'
 export class EmployeeProfileComponent implements OnInit {
   form!: FormGroup
 
+  nombreEmpleado: string = 'Juan Pérez'
+  titulo: string = 'Gerente de Ventas'
+
   puestosTrabajo = [
     { label: 'Desarrollador', value: 'Desarrollador' },
     { label: 'Diseñador', value: 'Diseñador' },
