@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { EmployeeProfileService } from '../../services/employee-profile.service'
 import {
   DropDownInterface,
-  EmployeedDetailModel,
+  EmployeeDetailModel,
 } from '../../models/employee-profile.model'
 import { AuthService } from '../../services/auth.service'
 
@@ -15,7 +15,7 @@ import { AuthService } from '../../services/auth.service'
   styleUrls: ['./employee-list.component.scss'],
 })
 export class EmployeeListComponent implements OnInit {
-  employees: EmployeedDetailModel[] = []
+  employees: EmployeeDetailModel[] = []
   totalRecords: number = 0
   loading: boolean = true
   @ViewChild('dt') table!: Table
@@ -44,7 +44,7 @@ export class EmployeeListComponent implements OnInit {
       fechaNacimiento: [null, Validators.required],
       puestoTrabajo: ['', Validators.required],
       tipoContrato: ['', Validators.required],
-      fechaInicio: [null, Validators.required],
+      fechaInicioContrato: [null, Validators.required],
       status: ['', Validators.required],
     })
   }
@@ -55,26 +55,27 @@ export class EmployeeListComponent implements OnInit {
 
   loadEmployees(event: LazyLoadEvent) {
     this.loading = true
-    const params = {
-      first: event.first?.toString() || '0',
-      rows: event.rows?.toString() || '10',
-      sortField: event.sortField || '',
-      sortOrder: event.sortOrder === 1 ? 'asc' : 'desc',
-      filters: JSON.stringify(event.filters || {}),
-    }
+    console.log(event)
+    // const params = {
+    //   first: event.first?.toString() || '0',
+    //   rows: event.rows?.toString() || '10',
+    //   sortField: event.sortField || '',
+    //   sortOrder: event.sortOrder === 1 ? 'asc' : 'desc',
+    //   filters: JSON.stringify(event.filters || {}),
+    // }
 
-    this.employeeService.getEmployees(params).subscribe(
-      (response) => {
-        console.log(response)
-        // this.employees = response.data
-        // this.totalRecords = response.total
-        this.loading = false
-      },
-      (error) => {
-        console.error('Error fetching employees', error)
-        this.loading = false
-      },
-    )
+    // this.employeeService.getEmployees(params).subscribe(
+    //   () => {
+    // console.log(response)
+    // this.employees = response.data
+    // this.totalRecords = response.total
+    //   this.loading = false
+    // },
+    // () => {
+    // console.error('Error fetching employees', error)
+    //     this.loading = false
+    //   },
+    // )
   }
 
   onGlobalFilter(table: Table, event: Event) {
@@ -87,16 +88,16 @@ export class EmployeeListComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.employeeForm.valid) {
-      const employee: EmployeedDetailModel = this.employeeForm.value
-      this.employeeService.addEmployee(employee).subscribe(
-        () => {
-          this.displayModal = false
-          this.loadEmployees({ first: 0, rows: 10 })
-        },
-        (error) => console.error('Error adding employee', error),
-      )
-    }
+    // if (this.employeeForm.valid) {
+    //   const employee: EmployeeDetailModel = this.employeeForm.value
+    //   this.employeeService.addEmployee(employee).subscribe(
+    //     () => {
+    //       this.displayModal = false
+    //       this.loadEmployees({ first: 0, rows: 10 })
+    //     },
+    //     (error) => console.error('Error adding employee', error),
+    //   )
+    // }
   }
 
   // Agregamos este método
@@ -112,12 +113,12 @@ export class EmployeeListComponent implements OnInit {
   }
 
   // // Métodos adicionales para editar y eliminar empleados (implementar según sea necesario)
-  editEmployee(employee: EmployeedDetailModel) {
+  editEmployee(employee: EmployeeDetailModel) {
     //   // Implementar lógica de edición
     console.log('employee', employee)
   }
 
-  deleteEmployee(employee: EmployeedDetailModel) {
+  deleteEmployee(employee: EmployeeDetailModel) {
     // Implementar lógica de eliminación
     console.log('employee', employee)
   }

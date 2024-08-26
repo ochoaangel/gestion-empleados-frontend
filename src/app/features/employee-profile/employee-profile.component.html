@@ -26,7 +26,6 @@
             >
           </div>
         </div>
-
         <div class="p-field">
           <label for="nombre">Nombre</label>
           <input
@@ -44,7 +43,6 @@
             >
           </div>
         </div>
-
         <div class="p-field">
           <label for="apellido">Apellido</label>
           <input
@@ -64,7 +62,6 @@
             >
           </div>
         </div>
-
         <div class="p-field">
           <label for="fechaNacimiento">Fecha de Nacimiento</label>
           <p-calendar
@@ -83,13 +80,13 @@
             >
           </div>
         </div>
-
         <div class="p-field">
           <label for="puestoTrabajo">Puesto de Trabajo</label>
           <p-dropdown
             formControlName="puestoTrabajo"
             [options]="puestosTrabajo"
             optionLabel="label"
+            optionValue="value"
             placeholder="Seleccione.."
           />
           <div
@@ -103,13 +100,13 @@
             >
           </div>
         </div>
-
         <div class="p-field">
           <label for="tipoContrato">Tipo de Contrato</label>
           <p-dropdown
             formControlName="tipoContrato"
             [options]="tiposContrato"
             optionLabel="label"
+            optionValue="value"
             placeholder="Seleccione.."
           />
           <div
@@ -125,20 +122,19 @@
         </div>
 
         <div class="p-field">
-          <label for="fechaInicio">Fecha de Inicio</label>
-          <p-calendar formControlName="fechaInicio" />
+          <label for="fechaInicioContrato">Fecha de Inicio</label>
+          <p-calendar formControlName="fechaInicioContrato" />
           <div
             *ngIf="
-              form.get('fechaInicio')?.invalid &&
-              form.get('fechaInicio')?.touched
+              form.get('fechaInicioContrato')?.invalid &&
+              form.get('fechaInicioContrato')?.touched
             "
           >
-            <small *ngIf="form.get('fechaInicio')?.errors?.['required']"
+            <small *ngIf="form.get('fechaInicioContrato')?.errors?.['required']"
               >Fecha de inicio es requerida.</small
             >
           </div>
         </div>
-
         <div class="form-buttons">
           <button
             pButton

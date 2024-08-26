@@ -1,21 +1,23 @@
 export interface EmployeeProfileModel {
+  id: string
   email: string
   nombre: string
   apellido: string
   fechaNacimiento: Date
   puestoTrabajo: string
   tipoContrato: string
-  fechaInicio: Date
+  fechaInicioContrato: Date
 }
 
-export interface EmployeedDetailModel {
+export interface EmployeeDetailModel {
+  id: string
   email: string
   nombre: string
   apellido: string
   fechaNacimiento: Date
   puestoTrabajo: string
   tipoContrato: string
-  fechaInicio: Date
+  fechaInicioContrato: Date
   status: 'activo' | 'baja'
 }
 

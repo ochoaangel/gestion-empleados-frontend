@@ -1,40 +1,22 @@
-import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
+import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
-import {
-  EmployeedDetailModel,
-  EmployeeResponse,
-  Params,
-} from '../models/employee-profile.model'
+import { EmployeeProfileModel } from '../models/employee-profile.model'
+import { environment } from '../../../environments.prod'
 
 @Injectable({
   providedIn: 'root',
 })
 export class EmployeeProfileService {
-  private apiUrl = 'api/employees'
-
   constructor(private http: HttpClient) {}
 
-  getEmployees(params: Params): Observable<EmployeeResponse> {
-    return this.http.get<EmployeeResponse>(this.apiUrl, { params })
-  }
-
-  addEmployee(
-    employee: EmployeedDetailModel,
-  ): Observable<EmployeedDetailModel> {
-    return this.http.post<EmployeedDetailModel>(this.apiUrl, employee)
-  }
-
-  updateEmployee(
-    employee: EmployeedDetailModel,
-  ): Observable<EmployeedDetailModel> {
-    return this.http.put<EmployeedDetailModel>(
-      `${this.apiUrl}/${employee.email}`,
-      employee,
+  getProfile(id: string): Observable<EmployeeProfileModel> {
+    return this.http.get<EmployeeProfileModel>(
+      `${environment.apiUrl}/usuarios/${id}`,
     )
   }
 
-  deleteEmployee<T>(email: string): Observable<T> {
-    return this.http.delete<T>(`${this.apiUrl}/${email}`)
+  updateProfile(id: string, profile: EmployeeProfileModel): Observable<void> {
+    return this.http.put<void>(`${environment.apiUrl}/usuarios/${id}`, profile)
   }
 }

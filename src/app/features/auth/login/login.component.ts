@@ -41,7 +41,8 @@ export class LoginComponent implements OnInit {
         next: () => {
           this.toast.success('Iniciastes sesión Correctamente')
           if (this.authService.userToken?.rol === 'usuario') {
-            this.router.navigate(['/list'])
+            // this.router.navigate(['/list'])
+            this.router.navigate(['/profile'])
           } else {
             this.router.navigate(['/profile'])
           }
