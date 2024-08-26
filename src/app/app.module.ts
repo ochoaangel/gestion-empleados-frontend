@@ -11,7 +11,8 @@ import { AuthService } from './services/auth.service'
 import { PrimeNgModule } from './primeng/primeng.module'
 import { EmployeeProfileService } from './services/employee-profile.service'
 import { ToolbarComponent } from './shared/toolbar/toolbar.component'
-import { HttpClientModule } from '@angular/common/http'
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'
+import { authInterceptor } from './interceptors/auth.interceptor'
 
 @NgModule({
   declarations: [
@@ -29,7 +30,11 @@ import { HttpClientModule } from '@angular/common/http'
     HttpClientModule,
     PrimeNgModule,
   ],
-  providers: [AuthService, EmployeeProfileService],
+  providers: [
+    AuthService,
+    EmployeeProfileService,
+    { provide: HTTP_INTERCEPTORS, useValue: authInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
