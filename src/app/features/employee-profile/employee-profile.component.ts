@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { EmployeeProfileService } from '../../services/employee-profile.service'
+import { AuthService } from '../../services/auth.service'
 // import { EmployeeProfileModel } from '../../models/employee-profile.model'
 
 @Component({
@@ -11,9 +12,10 @@ import { EmployeeProfileService } from '../../services/employee-profile.service'
 })
 export class EmployeeProfileComponent implements OnInit {
   form!: FormGroup
+  rol!: string
 
-  nombreEmpleado: string = 'Juan Pérez'
-  titulo: string = 'Gerente de Ventas'
+  nombreEmpleado: string = ''
+  titulo: string = ''
 
   puestosTrabajo = [
     { label: 'Desarrollador', value: 'Desarrollador' },
@@ -30,17 +32,20 @@ export class EmployeeProfileComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private profileService: EmployeeProfileService,
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
+    const disabled =
+      this.authService.userToken?.rol === 'empleado' ? true : false
     this.form = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      nombre: ['', Validators.required],
-      apellido: ['', Validators.required],
-      fechaNacimiento: ['', Validators.required],
+      email: [{ value: '', disabled }, [Validators.required, Validators.email]],
+      nombre: [{ value: '', disabled }, Validators.required],
+      apellido: [{ value: '', disabled }, Validators.required],
+      fechaNacimiento: [{ value: '', disabled }, Validators.required],
       puestoTrabajo: ['', Validators.required],
-      tipoContrato: ['', Validators.required],
-      fechaInicio: ['', Validators.required],
+      tipoContrato: [{ value: '', disabled }, Validators.required],
+      fechaInicio: [{ value: '', disabled }, Validators.required],
     })
   }
 
