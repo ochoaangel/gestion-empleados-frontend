@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { BrowserModule } from '@angular/platform-browser'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { CalendarModule } from 'primeng/calendar'
+import { ToolbarModule } from 'primeng/toolbar'
 
 @NgModule({
   exports: [
@@ -25,6 +26,7 @@ import { CalendarModule } from 'primeng/calendar'
     FormsModule,
     ReactiveFormsModule,
     CalendarModule,
+    ToolbarModule,
   ],
 })
 export class PrimeNgModule {}

@@ -10,6 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms'
 import { AuthService } from './services/auth.service'
 import { PrimeNgModule } from './primeng/primeng.module'
 import { EmployeeProfileService } from './services/employee-profile.service'
+import { ToolbarComponent } from './shared/toolbar/toolbar.component'
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { EmployeeProfileService } from './services/employee-profile.service'
     LoginComponent,
     EmployeeProfileComponent,
     EmployeeListComponent,
+    ToolbarComponent,
   ],
   imports: [
     BrowserModule,
