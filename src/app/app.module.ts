@@ -6,11 +6,12 @@ import { AppComponent } from './app.component'
 import { LoginComponent } from './features/auth/login/login.component'
 import { EmployeeProfileComponent } from './features/employee-profile/employee-profile.component'
 import { EmployeeListComponent } from './features/employee-list/employee-list.component'
-import { ReactiveFormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { AuthService } from './services/auth.service'
 import { PrimeNgModule } from './primeng/primeng.module'
 import { EmployeeProfileService } from './services/employee-profile.service'
 import { ToolbarComponent } from './shared/toolbar/toolbar.component'
+import { HttpClientModule } from '@angular/common/http'
 
 @NgModule({
   declarations: [
@@ -24,6 +25,8 @@ import { ToolbarComponent } from './shared/toolbar/toolbar.component'
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
+    HttpClientModule,
     PrimeNgModule,
   ],
   providers: [AuthService, EmployeeProfileService],

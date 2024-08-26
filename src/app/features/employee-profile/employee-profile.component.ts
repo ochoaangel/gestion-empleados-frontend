@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { EmployeeProfileService } from '../../services/employee-profile.service'
-import { EmployeeProfileModel } from '../../models/employee-profile.model'
+// import { EmployeeProfileModel } from '../../models/employee-profile.model'
 
 @Component({
   selector: 'app-employee-profile',
@@ -43,8 +43,9 @@ export class EmployeeProfileComponent implements OnInit {
 
   saveProfile(): void {
     if (this.form.valid) {
-      const profileData: EmployeeProfileModel = this.form.value
-      this.profileService.saveProfile(profileData)
+      // const profileData: EmployeeProfileModel = this.form.value
+      console.log('Agregar funcionalidad..')
+      // this.profileService.saveProfile(profileData)
     }
   }
 }

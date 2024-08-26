@@ -1,31 +1,43 @@
 import { NgModule } from '@angular/core'
-import { ButtonModule } from 'primeng/button'
-import { InputTextModule } from 'primeng/inputtext'
-import { CheckboxModule } from 'primeng/checkbox'
-import { CardModule } from 'primeng/card'
-import { MessagesModule } from 'primeng/messages'
-import { MessageModule } from 'primeng/message'
-import { DropdownModule } from 'primeng/dropdown'
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { BrowserModule } from '@angular/platform-browser'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { CalendarModule } from 'primeng/calendar'
-import { ToolbarModule } from 'primeng/toolbar'
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { BrowserModule } from '@angular/platform-browser'
+import { ButtonModule } from 'primeng/button'
+import { CalendarModule } from 'primeng/calendar'
+import { CardModule } from 'primeng/card'
+import { CheckboxModule } from 'primeng/checkbox'
+import { ConfirmDialogModule } from 'primeng/confirmdialog'
+import { DialogModule } from 'primeng/dialog'
+import { DropdownModule } from 'primeng/dropdown'
+import { IconFieldModule } from 'primeng/iconfield'
+import { InputIconModule } from 'primeng/inputicon'
+import { InputTextModule } from 'primeng/inputtext'
+import { MessageModule } from 'primeng/message'
+import { MessagesModule } from 'primeng/messages'
+import { MultiSelectModule } from 'primeng/multiselect'
+import { TableModule } from 'primeng/table'
+import { TagModule } from 'primeng/tag'
+import { ToolbarModule } from 'primeng/toolbar'
 @NgModule({
   exports: [
-    ButtonModule,
-    InputTextModule,
-    CheckboxModule,
-    CardModule,
-    MessagesModule,
-    MessageModule,
-    DropdownModule,
-    BrowserModule,
     BrowserAnimationsModule,
-    FormsModule,
-    ReactiveFormsModule,
+    BrowserModule,
+    ButtonModule,
     CalendarModule,
+    CardModule,
+    CheckboxModule,
+    ConfirmDialogModule,
+    DialogModule,
+    DropdownModule,
+    IconFieldModule,
+    InputIconModule,
+    InputTextModule,
+    InputTextModule,
+    MessageModule,
+    MessagesModule,
+    MultiSelectModule,
+    TableModule,
+    TagModule,
     ToolbarModule,
   ],
 })
