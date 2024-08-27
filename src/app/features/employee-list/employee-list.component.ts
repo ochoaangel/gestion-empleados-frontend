@@ -29,6 +29,8 @@ export class EmployeeListComponent implements OnInit {
   nombreEmpleado: string = 'Juan Pérez'
   titulo: string = 'Gerente de Ventas'
 
+  modoAgregarEmpleado: boolean = false
+
   statuses: DropDownInterface[] = [
     { label: 'Activo', value: 'activo' },
     { label: 'Baja', value: 'baja' },
@@ -144,5 +146,10 @@ export class EmployeeListComponent implements OnInit {
         )
       }
     }
+  }
+
+  agregarEmpleado() {
+    this.modoAgregarEmpleado = true
+    this.displayModal = true
   }
 }

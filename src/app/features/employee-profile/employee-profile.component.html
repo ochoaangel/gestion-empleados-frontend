@@ -147,12 +147,13 @@
           <button
             pButton
             type="submit"
-            label="Guardar"
+            label="{{ agregarUsuario ? 'Registar Usuario' : 'Guardar' }}"
             [style]="{
               'background-color': 'var(--blue-900)',
               border: 'var(--blue-900)',
             }"
             [disabled]="form.invalid"
+            (click)="botonPresionado()"
           ></button>
         </div>
       </div>

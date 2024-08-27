@@ -18,6 +18,7 @@ export class EmployeeProfileComponent implements OnInit {
   @Input() employee!: EmployeeDetailModel
   form!: FormGroup
   rol!: string
+  agregarUsuario!: boolean
 
   nombreEmpleado: string = ''
   titulo: string = ''
@@ -47,7 +48,14 @@ export class EmployeeProfileComponent implements OnInit {
 
   ngOnInit(): void {
     // Determina si los campos deben estar deshabilitados
-    const disabled = !this.employee
+    this.agregarUsuario =
+      !this.employee && this.authService.userToken?.rol === 'usuario'
+        ? true
+        : false
+    const disabled = this.authService.userToken?.rol === 'empleado'
+    // const disabled = !this.employee && this.agregarUsuario
+    // const habilito =  this.authService.userToken?.rol==='usuario'
+    // console.log(habilito)
 
     // Configura el formulario con los valores iniciales y el estado de deshabilitado
     this.form = this.fb.group({
@@ -71,19 +79,21 @@ export class EmployeeProfileComponent implements OnInit {
       })
       this.rol = 'usuario'
     } else {
-      this.rol = 'empleado'
       // Si no hay un empleado, obtiene el perfil del usuario
-      const userId = this.authService.userToken?.id
-      if (userId) {
-        this.profileService.getProfile(userId).subscribe((profile) => {
-          profile.fechaNacimiento = new Date(profile.fechaNacimiento)
-          profile.fechaInicioContrato = new Date(profile.fechaInicioContrato)
-          this.form.patchValue(profile)
-        })
-      } else {
-        // Si no hay un usuario, cierra sesión y redirige
-        this.authService.logout()
-        this.router.navigate([''])
+
+      if (!this.agregarUsuario) {
+        const userId = this.authService.userToken?.id
+        if (userId) {
+          this.profileService.getProfile(userId).subscribe((profile) => {
+            profile.fechaNacimiento = new Date(profile.fechaNacimiento)
+            profile.fechaInicioContrato = new Date(profile.fechaInicioContrato)
+            this.form.patchValue(profile)
+          })
+        } else {
+          // Si no hay un usuario, cierra sesión y redirige
+          this.authService.logout()
+          this.router.navigate([''])
+        }
       }
     }
   }
@@ -108,5 +118,40 @@ export class EmployeeProfileComponent implements OnInit {
           },
         })
     }
+  }
+
+  registrarUsuario(): void {
+    if (this.form.valid) {
+      const profileData: EmployeeProfileModel = {
+        ...this.employee,
+        ...this.form.value,
+      }
+      // console.log('registrarUsuario this.employee._id: ', this.employee._id)
+      this.profileService.registrarProfile(profileData).subscribe({
+        next: () => {
+          this.toast.success('Se registró el empleado Correctamente')
+        },
+        error: () => {
+          this.toast.error(
+            'Hubo un error registrando el empleado, intente nuevamente.',
+          )
+        },
+      })
+    }
+  }
+
+  botonPresionado() {
+    if (this.agregarUsuario) {
+      this.registrarUsuario()
+    } else {
+      this.saveProfile()
+    }
+  }
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    this.agregarUsuario = false
+    this.form.reset()
   }
 }

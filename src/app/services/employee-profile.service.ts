@@ -63,6 +63,15 @@ export class EmployeeProfileService {
     )
   }
 
+  registrarProfile(
+    profile: Partial<EmployeeDetailModel>,
+  ): Observable<EmployeeDetailModel> {
+    return this.http.post<EmployeeDetailModel>(
+      `${environment.apiUrl}/usuarios/registro`,
+      profile,
+    )
+  }
+
   deleteEmployee(id: string): Observable<void> {
     return this.http.delete<void>(`${environment.apiUrl}/usuarios/${id}`)
   }

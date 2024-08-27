@@ -32,6 +32,17 @@
           placeholder="Buscar..."
         />
       </span>
+      <button
+        pButton
+        type="submit"
+        label="Agregar Empleado"
+        [style]="{
+          'background-color': 'var(--blue-900)',
+          border: 'var(--blue-900)',
+          'margin-left': '10px',
+        }"
+        (click)="agregarEmpleado()"
+      ></button>
     </div>
   </ng-template>
   <ng-template pTemplate="header">
