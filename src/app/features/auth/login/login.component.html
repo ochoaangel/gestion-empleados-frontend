@@ -1,7 +1,20 @@
 <div class="login-container">
-  <p-card header="Inicia Sesión" class="login-card">
+  <p-card
+    header="Inicia Sesión"
+    [style]="{ 'text-align': 'center', 'padding-top': '90px' }"
+    class="login-card"
+  >
+    <div style="position: absolute">
+      <div style="position: relative; bottom: 150px; left: 85px">
+        <p-image
+          alt="Image"
+          src="https://www.pikpng.com/pngl/b/339-3397517_crear-logo-gratis-onlinelogotipos-para-empresas-espa-241a.png"
+          width="70px"
+        />
+      </div>
+    </div>
     <form [formGroup]="form">
-      <div class="p-fluid">
+      <div class="p-fluid" style="text-align: left">
         <div class="p-field">
           <label for="email">Email</label>
           <input
@@ -43,22 +56,17 @@
             >
           </div>
         </div>
-
-        <div class="form-buttons">
-          <button
-            pButton
-            type="button"
-            label="Recuperar Contraseña"
-            (click)="recoverPassword()"
-          ></button>
-          <button
-            pButton
-            type="submit"
-            label="Iniciar Sesión"
-            [disabled]="form.invalid"
-            (click)="login()"
-          ></button>
-        </div>
+        <button
+          pButton
+          type="submit"
+          label="Iniciar Sesión"
+          [disabled]="form.invalid"
+          (click)="login()"
+          [style]="{
+            'background-color': 'var(--blue-900)',
+            border: 'var(--blue-900)',
+          }"
+        ></button>
       </div>
     </form>
   </p-card>

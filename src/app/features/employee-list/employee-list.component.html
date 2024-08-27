@@ -75,6 +75,7 @@
       <td>
         <p-tag
           [value]="employee.status"
+          [style]="{ width: '50px', 'background-color': '#00294c' }"
           [severity]="getSeverity(employee.status)"
         ></p-tag>
       </td>
@@ -82,13 +83,16 @@
         <button
           pButton
           icon="pi pi-pencil"
-          class="p-button-rounded p-button-success mr-2"
           (click)="editEmployee(employee)"
+          [outlined]="true"
+          size="small"
         ></button>
         <button
+          *ngIf="employee.status === 'activo'"
           pButton
           icon="pi pi-trash"
-          class="p-button-rounded p-button-danger"
+          [outlined]="true"
+          size="small"
           (click)="deleteEmployee(employee, $event)"
         ></button>
       </td>
@@ -98,90 +102,24 @@
 
 <p-dialog
   [(visible)]="displayModal"
-  [style]="{ width: '450px' }"
-  header="Empleado"
   [modal]="true"
-  styleClass="p-fluid"
+  [style]="{ width: '500px' }"
 >
+  <ng-template pTemplate="header"> </ng-template>
   <ng-template pTemplate="content">
-    <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
-      <div class="field">
-        <label for="email">Email</label>
-        <input
-          type="text"
-          pInputText
-          id="email"
-          formControlName="email"
-          required
-        />
-        <small
-          class="p-error"
-          *ngIf="
-            employeeForm.get('email')?.invalid &&
-            employeeForm.get('email')?.touched
-          "
-        >
-          Email es requerido y debe ser válido.
-        </small>
-      </div>
-      <div class="field">
-        <label for="nombre">Nombre</label>
-        <input
-          type="text"
-          pInputText
-          id="nombre"
-          formControlName="nombre"
-          required
-        />
-        <small
-          class="p-error"
-          *ngIf="
-            employeeForm.get('nombre')?.invalid &&
-            employeeForm.get('nombre')?.touched
-          "
-        >
-          Nombre es requerido.
-        </small>
-      </div>
-
-      <div class="field">
-        <label for="status">Estado</label>
-        <p-dropdown
-          id="status"
-          [options]="statuses"
-          formControlName="status"
-          optionLabel="label"
-          optionValue="value"
-          placeholder="Seleccione un estado"
-        ></p-dropdown>
-        <small
-          class="p-error"
-          *ngIf="
-            employeeForm.get('status')?.invalid &&
-            employeeForm.get('status')?.touched
-          "
-        >
-          Estado es requerido.
-        </small>
-      </div>
-    </form>
+    <app-employee-profile [employee]="selectedEmployee"></app-employee-profile>
   </ng-template>
+
   <ng-template pTemplate="footer">
     <button
       pButton
       pRipple
-      label="Cancelar"
-      icon="pi pi-times"
-      class="p-button-text"
+      label="Cerrar"
+      [style]="{
+        'background-color': 'var(--blue-900)',
+        border: 'var(--blue-900)',
+      }"
       (click)="displayModal = false"
-    ></button>
-    <button
-      pButton
-      pRipple
-      label="Guardar"
-      icon="pi pi-check"
-      class="p-button-text"
-      (click)="onSubmit()"
     ></button>
   </ng-template>
 </p-dialog>

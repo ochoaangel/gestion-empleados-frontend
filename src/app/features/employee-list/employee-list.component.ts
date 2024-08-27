@@ -24,6 +24,7 @@ export class EmployeeListComponent implements OnInit {
 
   employeeForm: FormGroup
   displayModal: boolean = false
+  selectedEmployee!: EmployeeDetailModel
 
   nombreEmpleado: string = 'Juan Pérez'
   titulo: string = 'Gerente de Ventas'
@@ -86,19 +87,19 @@ export class EmployeeListComponent implements OnInit {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains')
   }
 
-  getSeverity(status: string): 'success' | 'danger' | 'info' {
+  getSeverity(status: string): 'success' | 'secondary' | 'info' {
     switch (status) {
       case 'activo':
-        return 'success'
-      case 'baja':
-        return 'danger'
-      default:
         return 'info'
+      case 'baja':
+        return 'info'
+      default:
+        return 'success'
     }
   }
 
   editEmployee(employee: EmployeeDetailModel) {
-    this.employeeForm.patchValue(employee)
+    this.selectedEmployee = employee
     this.displayModal = true
   }
 

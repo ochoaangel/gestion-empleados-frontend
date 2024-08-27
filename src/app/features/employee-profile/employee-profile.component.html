@@ -1,11 +1,16 @@
 <div>
-  <app-toolbar
-    [nombreEmpleado]="nombreEmpleado"
-    [titulo]="titulo"
-  ></app-toolbar>
+  @if (rol === 'empleado') {
+    <app-toolbar
+      [nombreEmpleado]="nombreEmpleado"
+      [titulo]="titulo"
+    ></app-toolbar>
+  }
 </div>
-<div class="profile-container">
-  <p-card header="Perfil de Empleado" class="profile-card">
+<div
+  class="profile-container"
+  [ngStyle]="{ height: rol === 'empleado' ? '95vh' : '' }"
+>
+  <p-card header="Perfil" class="profile-card">
     <form [formGroup]="form" (ngSubmit)="saveProfile()">
       <div class="p-fluid">
         <div class="p-field">
@@ -143,6 +148,10 @@
             pButton
             type="submit"
             label="Guardar"
+            [style]="{
+              'background-color': 'var(--blue-900)',
+              border: 'var(--blue-900)',
+            }"
             [disabled]="form.invalid"
           ></button>
         </div>

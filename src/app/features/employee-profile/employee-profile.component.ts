@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, Input } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { EmployeeProfileService } from '../../services/employee-profile.service'
 import { AuthService } from '../../services/auth.service'
-import { EmployeeProfileModel } from '../../models/employee-profile.model'
+import {
+  EmployeeDetailModel,
+  EmployeeProfileModel,
+} from '../../models/employee-profile.model'
 import { ToastService } from '../../services/toast.service'
 import { Router } from '@angular/router'
 
@@ -12,6 +15,7 @@ import { Router } from '@angular/router'
   styleUrls: ['./employee-profile.component.scss'],
 })
 export class EmployeeProfileComponent implements OnInit {
+  @Input() employee!: EmployeeDetailModel
   form!: FormGroup
   rol!: string
 
@@ -36,25 +40,16 @@ export class EmployeeProfileComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private profileService: EmployeeProfileService,
-    private authService: AuthService,
     private toast: ToastService,
+    private authService: AuthService,
     private router: Router,
   ) {}
 
   ngOnInit(): void {
-    const userId = this.authService.userToken?.id
-    if (userId) {
-      this.profileService.getProfile(userId).subscribe((profile) => {
-        profile.fechaNacimiento = new Date(profile.fechaNacimiento)
-        profile.fechaInicioContrato = new Date(profile.fechaInicioContrato)
-        this.form.patchValue(profile)
-      })
-    } else {
-      this.authService.logout()
-      this.router.navigate([''])
-    }
+    // Determina si los campos deben estar deshabilitados
+    const disabled = !this.employee
 
-    const disabled = this.authService.userToken?.rol === 'empleado'
+    // Configura el formulario con los valores iniciales y el estado de deshabilitado
     this.form = this.fb.group({
       email: [{ value: '', disabled }, [Validators.required, Validators.email]],
       nombre: [{ value: '', disabled }, Validators.required],
@@ -64,17 +59,45 @@ export class EmployeeProfileComponent implements OnInit {
       tipoContrato: [{ value: '', disabled }, Validators.required],
       fechaInicioContrato: [{ value: '', disabled }, Validators.required],
     })
+
+    if (this.employee) {
+      // Si hay un empleado, establece los valores del formulario
+      setTimeout(() => {
+        this.employee.fechaNacimiento = new Date(this.employee.fechaNacimiento)
+        this.employee.fechaInicioContrato = new Date(
+          this.employee.fechaInicioContrato,
+        )
+        this.form.patchValue(this.employee)
+      })
+      this.rol = 'usuario'
+    } else {
+      this.rol = 'empleado'
+      // Si no hay un empleado, obtiene el perfil del usuario
+      const userId = this.authService.userToken?.id
+      if (userId) {
+        this.profileService.getProfile(userId).subscribe((profile) => {
+          profile.fechaNacimiento = new Date(profile.fechaNacimiento)
+          profile.fechaInicioContrato = new Date(profile.fechaInicioContrato)
+          this.form.patchValue(profile)
+        })
+      } else {
+        // Si no hay un usuario, cierra sesión y redirige
+        this.authService.logout()
+        this.router.navigate([''])
+      }
+    }
   }
 
   saveProfile(): void {
     if (this.form.valid) {
-      const userId = this.authService.userToken?.id
-      if (userId) {
-        const profileData: EmployeeProfileModel = {
-          id: userId,
-          ...this.form.value,
-        }
-        this.profileService.updateProfile(userId, profileData).subscribe({
+      const profileData: EmployeeProfileModel = {
+        ...this.employee,
+        ...this.form.value,
+      }
+      console.log('updateProfile this.employee._id: ', this.employee._id)
+      this.profileService
+        .updateProfile(this.employee._id, profileData)
+        .subscribe({
           next: () => {
             this.toast.success('Se actualizó el perfil Correctamente')
           },
@@ -84,7 +107,6 @@ export class EmployeeProfileComponent implements OnInit {
             )
           },
         })
-      }
     }
   }
 }

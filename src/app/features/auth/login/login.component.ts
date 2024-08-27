@@ -22,11 +22,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      email: ['opc.grecia@gmail.com', [Validators.required, Validators.email]],
-      clave: [
-        'opc.grecia@gmail.com',
-        [Validators.required, Validators.minLength(6)],
-      ],
+      email: ['', [Validators.required, Validators.email]],
+      clave: ['', [Validators.required, Validators.minLength(6)]],
       loggedin: [false],
     })
   }
@@ -57,7 +54,3 @@ export class LoginComponent implements OnInit {
     // Lógica para recuperar contraseña
   }
 }
-// {
-//   "email": "opc.grecia@gmail.com",
-//   "clave": "opc.grecia@gmail.com"
-// }

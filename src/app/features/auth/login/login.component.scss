@@ -3,6 +3,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background-color: #efefef;
 
   .login-card {
     width: 300px;
@@ -21,4 +22,18 @@
 
 small {
   color: red;
+}
+
+.p-field {
+  margin: 40px 0;
+}
+
+// .fondo-imagen {
+//   background-image: url('assets/Emplresa.png');
+//   background-size: cover;
+//   background-position: center;
+// }
+
+.p-card-body {
+  margin-top: 90px !important;
 }

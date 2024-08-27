@@ -20,6 +20,7 @@ import { TagModule } from 'primeng/tag'
 import { ToolbarModule } from 'primeng/toolbar'
 import { ToastModule } from 'primeng/toast'
 import { ConfirmPopupModule } from 'primeng/confirmpopup'
+import { ImageModule } from 'primeng/image'
 
 @NgModule({
   exports: [
@@ -44,6 +45,7 @@ import { ConfirmPopupModule } from 'primeng/confirmpopup'
     ToolbarModule,
     ToastModule,
     ConfirmPopupModule,
+    ImageModule,
   ],
 })
 export class PrimeNgModule {}

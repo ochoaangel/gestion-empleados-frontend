@@ -1,14 +1,15 @@
-<p-toolbar>
+<p-toolbar
+  [style]="{ 'background-color': '#00294C', color: 'white', border: '#00294C' }"
+>
   <div class="p-toolbar-group-start">
     <div class="texto-header-empresa">{{ titulo }}</div>
   </div>
   <div class="p-toolbar-group-end">
     <div class="texto-header-nombre">{{ nombreEmpleado }}</div>
     <p-button
-      label="Cerrar Sesión"
       icon="pi pi-sign-out"
       iconPos="right"
-      severity="danger"
+      severity="secondary"
       (click)="cerrarSesion()"
     ></p-button>
   </div>
