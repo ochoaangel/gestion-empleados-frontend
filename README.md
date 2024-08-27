@@ -1,27 +1,58 @@
-# GestionEmpleadosFrontend
+# Gestión de Empleados Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.1.
+Este proyecto es una aplicación web para la gestión de empleados, desarrollada con Angular 18 y utilizando la arquitectura de componentes standalone.
 
-## Development server
+## Características
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Autenticación de usuarios (login/logout) con JWT
+- Gestión de perfiles de empleados
+- Listado de empleados
+- Panel de administración para usuarios con rol de administrador
+- Formularios reactivos para la entrada de datos
+- Interfaz de usuario con PrimeNG y Kendo UI
+- Estilos con PrimeFlex
 
-## Code scaffolding
+## Requisitos previos
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Node.js (versión compatible con Angular 18)
+- Angular CLI (versión 18.2.1 o superior)
 
-## Build
+## Instalación
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+1. Clona el repositorio:git clone https://github.com/tu-usuario/gestion-empleados-frontend.git
+2. Navega al directorio del proyecto:
+cd gestion-empleados-frontend
+3. Instala las dependencias:
+npm install
+## Ejecución
 
-## Running unit tests
+Para iniciar el servidor de desarrollo:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Navega a `http://localhost:4200/`. La aplicación se recargará automáticamente si cambias alguno de los archivos fuente.
 
-## Running end-to-end tests
+## Scripts disponibles
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+- `npm start`: Inicia el servidor de desarrollo
+- `npm run build`: Compila la aplicación para producción
+- `npm test`: Ejecuta los tests unitarios
+- `npm run lint`: Ejecuta el linter (ESLint)
+- `npm run format`: Formatea el código con Prettier
+- `npm run prepare`: Instala los hooks de Husky
 
-## Further help
+## Tecnologías y librerías principales
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- Angular 18.2.0
+- PrimeNG 17.18.9
+- Kendo UI Angular Components
+- RxJS 7.8.0
+- JWT Decode 4.0.0
+
+## Herramientas de desarrollo
+
+- ESLint
+- Prettier
+- Husky
+- Lint-staged
+- Jasmine y Karma para testing
+
+## Estructura del proyecto
